@@ -3,9 +3,10 @@
 
     <string name="app_name">SafetyAlert</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    
     <string name="activation">Activation</string>
     <string name="alert_on">ALERT ON</string>
     <string name="alert_off">ALERT OFF</string>
+    <string name="start_guardian">1 min</string>
 
 </resources>

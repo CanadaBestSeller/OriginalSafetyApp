@@ -25,4 +25,11 @@
         android:textOff="@string/alert_off" 
         android:onClick="activationClicked" />
 
+    <Button
+        android:id="@+id/start_guardian_one_minute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_guardian" 
+        android:onClick="startGuardianFor1Minute"/>
+
 </LinearLayout>
