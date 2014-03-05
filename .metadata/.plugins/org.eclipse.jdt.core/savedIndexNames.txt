@@ -1,0 +1,3 @@
+INDEX VERSION 1.126+C:\Users\David\Documents\GitHub\SafetyAlert\.metadata\.plugins\org.eclipse.jdt.core
+95031146.index
+2469884818.index
