@@ -24,14 +24,14 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name="com.example.safetyalert.DisplayMessageActivity"
-            android:label="@string/title_activity_display_message"
-            android:parentActivityName="com.example.safetyalert.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.safetyalert.MainActivity" />
-        </activity>
+<!--         <activity -->
+<!--             android:name="com.example.safetyalert.DisplayMessageActivity" -->
+<!--             android:label="@string/title_activity_display_message" -->
+<!--             android:parentActivityName="com.example.safetyalert.MainActivity" > -->
+<!--             <meta-data -->
+<!--                 android:name="android.support.PARENT_ACTIVITY" -->
+<!--                 android:value="com.example.safetyalert.MainActivity" /> -->
+<!--         </activity> -->
 
     </application>
 
