@@ -19,6 +19,7 @@ public class MainActivity extends Activity {
     public static final int APP_NOTIFICATION_ID = 1;
 
 	public boolean activation;
+	private boolean guardianMode;
 	public NotificationManager nm;
 
 	@Override
@@ -26,6 +27,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         activation = false;
+        guardianMode = false;
         nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         setContentView(R.layout.activity_main);
@@ -83,7 +85,8 @@ public class MainActivity extends Activity {
 		return notification;
 	}
 
-	public Notification guardianModeNotification(int minutes) {
+	public void guardianModeNotification(int minutes) {
+		// This part and the next NEED to communicate with thread below
 		NotificationCompat.Builder ncb = new NotificationCompat.Builder(this)
 			.setSmallIcon(R.drawable.ic_launcher)
 			.setContentTitle("Guardian Mode")
@@ -94,8 +97,31 @@ public class MainActivity extends Activity {
 		PendingIntent p = PendingIntent.getActivity(this, 0, toMainActivity, 0);
 		ncb.setContentIntent(p);
 		
-		Notification notification = ncb.build();
-		notification.flags |= Notification.FLAG_ONGOING_EVENT;
+		
+		// Start a lengthy operation in a background thread
+		new Thread(
+		    new Runnable() {
+
+		        @Override
+		        public void run() {
+		            for (int i = 0; i <= 100; i+=5) {
+
+		                ncb.setProgress(100, i, false);
+		                Notification notification = ncb.build();
+		                notification.flags |= Notification.FLAG_ONGOING_EVENT;
+		                nm.notify(MainActivity.APP_NOTIFICATION_ID, notification);
+
+                        try {
+                            Thread.sleep(5*1000);
+                        } catch (InterruptedException e) {
+                            Log.d(TAG, "sleep failure");
+                        }
+
+		            }
+		            guardianModeOff();
+		        }
+		    }
+		).start();
 		
 		return notification;
 	}
@@ -105,13 +131,15 @@ public class MainActivity extends Activity {
 			nm.notify(MainActivity.APP_NOTIFICATION_ID, guardianModeNotification(minutes));
 			toast("Guardian Mode is ON. For the next " + minutes + 
 					" minutes, your friend might send you distress signals!", Toast.LENGTH_LONG);
+			this.guardianMode = true;
 		}
 	}
 	
-	public void guardianModeOff(int minutes) {
+	public void guardianModeOff() {
 		if (this.activation) {
 			nm.notify(MainActivity.APP_NOTIFICATION_ID, defaultNotification());
 			toast("Guardian Mode OFF. Thanks for helping out your friend!", Toast.LENGTH_SHORT);
+			this.guardianMode = false;
 		}
 	}
 }
