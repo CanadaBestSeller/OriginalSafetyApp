@@ -7,8 +7,7 @@ import android.support.v4.app.NotificationCompat;
 public class UpdateNotificationRunnable implements Runnable {
 
 	// we're going to update progress 1/20th at a time.
-	public static final int GRANULARITY = 2;
-	//public static final int GRANULARITY = 20;
+	public static final int GRANULARITY = 20;
 
 	public int minutes;
 	public int seconds;
@@ -25,7 +24,7 @@ public class UpdateNotificationRunnable implements Runnable {
 		
 		this.minutes = minutes;
 		//this.seconds = minutes*60;
-		this.seconds = 6;
+		this.seconds = 20;
 		this.timeslice = seconds/UpdateNotificationRunnable.GRANULARITY;
 	}
 
@@ -47,6 +46,8 @@ public class UpdateNotificationRunnable implements Runnable {
 				//TODO LOG ERROR
 			}
 		}
+
+		// guardianModeOff() executes toast, which must be done in a UI thread.
 		m.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {

@@ -1,10 +1,12 @@
 package com.example.safetyalert;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -48,9 +50,37 @@ public class MainActivity extends Activity {
 			deactivateSafetyApp();
 		}
 	}
-	
+
 	public void startGuardianFor1Minute(View view) {
 		guardianModeOn(1);
+	}
+
+	public void trigger(View view) {
+		if (guardianMode && activation) {
+			DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					switch (which) {
+					case DialogInterface.BUTTON_POSITIVE:
+						displayTriggerActivity();
+
+					case DialogInterface.BUTTON_NEGATIVE:
+						break;
+					}
+				}
+			};
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(TriggerMessage.getTriggerMessage())
+					.setPositiveButton(R.string.respond, dialogClickListener)
+					.setNegativeButton(R.string.cancel, dialogClickListener)
+					.show();
+		}
+	}
+
+	public void displayTriggerActivity() {
+		Intent intent = new Intent(this, DisplayTriggerDetailsActivity.class);
+		startActivity(intent);
 	}
 
 	public void toast(String message, int duration) {
@@ -96,15 +126,18 @@ public class MainActivity extends Activity {
 			PendingIntent p = PendingIntent.getActivity(this, 0,
 					toMainActivity, 0);
 
+			// TODO Get a different icon for guardian mode
 			NotificationCompat.Builder ncb = new NotificationCompat.Builder(
 					this).setSmallIcon(R.drawable.ic_launcher)
 					.setContentTitle("Guardian Mode")
 					.setContentText("Your friend might send you an alert!")
 					.setContentIntent(p);
 
-			UpdateNotificationRunnable r = new UpdateNotificationRunnable(this, ncb, nm, minutes);
+			UpdateNotificationRunnable r = new UpdateNotificationRunnable(this,
+					ncb, nm, minutes);
 			toast("Guardian Mode is ON. For the next " + minutes
-					+ " minutes, your friend might send you distress signals!", Toast.LENGTH_LONG);
+					+ " minutes, your friend might send you distress signals!",
+					Toast.LENGTH_LONG);
 			this.guardianMode = true;
 			new Thread(r).start();
 		}
@@ -113,7 +146,8 @@ public class MainActivity extends Activity {
 	public void guardianModeOff() {
 		if (this.activation) {
 			nm.notify(MainActivity.APP_NOTIFICATION_ID, defaultNotification());
-			toast("Guardian Mode OFF. Thanks for helping out your friend!", Toast.LENGTH_SHORT);
+			toast("Guardian Mode OFF. Thanks for helping out your friend!",
+					Toast.LENGTH_SHORT);
 			this.guardianMode = false;
 		}
 	}

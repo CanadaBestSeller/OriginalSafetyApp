@@ -2,34 +2,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="horizontal"
     tools:context=".MainActivity" >
-
-    <TextView
-        android:id="@+id/activation_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/activation"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ToggleButton
         android:id="@+id/activation_toggle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textOn="@string/alert_on" 
-        android:textOff="@string/alert_off" 
-        android:onClick="activationClicked" />
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:onClick="activationClicked"
+        android:textOff="@string/alert_off"
+        android:textOn="@string/alert_on" />
 
-    <Button
-        android:id="@+id/start_guardian_one_minute"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/start_guardian" 
-        android:onClick="startGuardianFor1Minute"/>
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/start_guardian_one_minute"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="startGuardianFor1Minute"
+            android:text="@string/start_guardian" />
+
+        <Button
+            android:id="@+id/trigger_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/trigger"
+            android:onClick="trigger" />
+
+    </LinearLayout>
 
 </LinearLayout>

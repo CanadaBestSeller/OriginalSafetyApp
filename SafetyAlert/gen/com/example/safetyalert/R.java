@@ -25,9 +25,9 @@ public final class R {
     }
     public static final class id {
         public static final int action_settings=0x7f080003;
-        public static final int activation_text=0x7f080000;
-        public static final int activation_toggle=0x7f080001;
-        public static final int start_guardian_one_minute=0x7f080002;
+        public static final int activation_toggle=0x7f080000;
+        public static final int start_guardian_one_minute=0x7f080001;
+        public static final int trigger_button=0x7f080002;
     }
     public static final class layout {
         public static final int activity_display_message=0x7f030000;
@@ -43,7 +43,12 @@ public final class R {
         public static final int alert_off=0x7f050004;
         public static final int alert_on=0x7f050003;
         public static final int app_name=0x7f050000;
+        public static final int cancel=0x7f050008;
+        public static final int confirm=0x7f050007;
+        public static final int respond=0x7f05000a;
         public static final int start_guardian=0x7f050005;
+        public static final int trigger=0x7f050006;
+        public static final int trigger_title=0x7f050009;
     }
     public static final class style {
         /** 
