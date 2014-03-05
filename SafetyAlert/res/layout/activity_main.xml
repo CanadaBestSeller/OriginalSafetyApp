@@ -9,16 +9,20 @@
     android:orientation="horizontal"
     tools:context=".MainActivity" >
 
-    <EditText android:id="@+id/edit_message"
+    <TextView
+        android:id="@+id/activation_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:hint="@string/edit_message" />
-    
-    <Button
+        android:text="@string/activation"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ToggleButton
+        android:id="@+id/activation_toggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_send" 
-        android:onClick="sendMessage" />
+        android:textOn="@string/alert_on" 
+        android:textOff="@string/alert_off" 
+        android:onClick="activationClicked" />
 
 </LinearLayout>
