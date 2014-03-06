@@ -20,16 +20,12 @@ public class MainActivity extends Activity {
 	public static final String EXTRA_MESSAGE = "com.example.safetyalert.MESSAGE";
 	public static final int APP_NOTIFICATION_ID = 1;
 
-	public NotificationManager nm;
 	public SafetyApp safetyApp = null;
 	public Thread safetyAppThread = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
 		setContentView(R.layout.activity_main);
 	}
 
@@ -52,13 +48,9 @@ public class MainActivity extends Activity {
 		safetyApp = new SafetyApp(this);
 		safetyAppThread = new Thread(safetyApp);
 		safetyAppThread.start();
-
-		nm.notify(MainActivity.APP_NOTIFICATION_ID, safetyAppOnNotification());
-		Utils.toast(getApplicationContext(), "Safety app activated!", Toast.LENGTH_SHORT);
 	}
 
 	public void deactivateSafetyApp() {
-		nm.cancel(MainActivity.APP_NOTIFICATION_ID);
 		if (safetyAppThread != null) {
 			safetyApp.terminate();
 			try {
@@ -75,22 +67,4 @@ public class MainActivity extends Activity {
 		// TODO Write method to terminate all running threads
 		
 	}
-
-	public Notification safetyAppOnNotification() {
-		NotificationCompat.Builder ncb = new NotificationCompat.Builder(this)
-				.setSmallIcon(R.drawable.ic_launcher)
-				.setContentTitle("Safety Alert is ON.")
-				.setContentText("Running in the background.");
-
-		// User goes back to the screen when they click the notification
-		Intent toMainActivity = new Intent(this, MainActivity.class);
-		PendingIntent p = PendingIntent.getActivity(this, 0, toMainActivity, 0);
-		ncb.setContentIntent(p);
-
-		Notification notification = ncb.build();
-		notification.flags |= Notification.FLAG_ONGOING_EVENT;
-
-		return notification;
-	}
-
 }

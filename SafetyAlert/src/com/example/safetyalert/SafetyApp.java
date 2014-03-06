@@ -1,19 +1,40 @@
 package com.example.safetyalert;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.widget.Toast;
 
 public class SafetyApp implements Runnable {
 
-	public Activity mainActivity;
 	public volatile boolean isOn = true;
+
+	public Activity mainActivity;
+	public NotificationManager nm;
 
 	public SafetyApp(Activity mainActivity) {
 		this.mainActivity = mainActivity;
+		
+		// If this doesn't work, make MainActivity pass it instead
+		this.nm = (NotificationManager) mainActivity.getSystemService(
+				Context.NOTIFICATION_SERVICE);
+
 	}
 
 	@Override
+	// TODO clean up messy Utils/Toast logic
 	public void run() {
+		nm.notify(MainActivity.APP_NOTIFICATION_ID,
+				NotificationFactory.safetyAppOnNotification(mainActivity));
+//		Utils.toast(mainActivity.getApplicationContext(),
+//				"Safety app activated!", Toast.LENGTH_SHORT);
+
+				mainActivity.runOnUiThread(new Runnable() {
+					public void run() {
+						Utils.toast(mainActivity.getApplicationContext(),
+								"Safety app activated!", Toast.LENGTH_SHORT);
+					}
+				});
 		while (isOn) {
 			try {
 				Thread.sleep(5000);
@@ -40,5 +61,6 @@ public class SafetyApp implements Runnable {
 
 	public void terminate() {
 		isOn = false;
+		nm.cancel(MainActivity.APP_NOTIFICATION_ID);
 	}
 }
