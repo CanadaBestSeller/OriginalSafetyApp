@@ -20,16 +20,14 @@ public class MainActivity extends Activity {
 	public static final String EXTRA_MESSAGE = "com.example.safetyalert.MESSAGE";
 	public static final int APP_NOTIFICATION_ID = 1;
 
-	public boolean activation;
-	private boolean guardianMode;
 	public NotificationManager nm;
+	public SafetyApp safetyApp = null;
+	public Thread safetyAppThread = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		activation = false;
-		guardianMode = false;
 		nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
 		setContentView(R.layout.activity_main);
@@ -44,65 +42,41 @@ public class MainActivity extends Activity {
 
 	public void activationClicked(View view) {
 		boolean on = ((ToggleButton) view).isChecked();
-		if (on) {
-			activateSafetyApp();
-		} else {
-			deactivateSafetyApp();
-		}
+		if (on) { activateSafetyApp(); } 
+		else { deactivateSafetyApp(); }
 	}
 
-	public void startGuardianFor1Minute(View view) {
-		guardianModeOn(1);
-	}
-
-	public void trigger(View view) {
-		if (guardianMode && activation) {
-			DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					switch (which) {
-					case DialogInterface.BUTTON_POSITIVE:
-						displayTriggerActivity();
-
-					case DialogInterface.BUTTON_NEGATIVE:
-						break;
-					}
-				}
-			};
-
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage(TriggerMessage.getTriggerMessage())
-					.setPositiveButton(R.string.respond, dialogClickListener)
-					.setNegativeButton(R.string.cancel, dialogClickListener)
-					.show();
-		}
-	}
-
-	public void displayTriggerActivity() {
-		Intent intent = new Intent(this, DisplayTriggerDetailsActivity.class);
-		startActivity(intent);
-	}
-
-	public void toast(String message, int duration) {
-		Context context = getApplicationContext();
-		CharSequence text = message;
-		Toast toast = Toast.makeText(context, text, duration);
-		toast.show();
-	}
-
+	// TODO Link safety thread w/ notification so if one dies, so does the other
+	// This will make it much easier to debug
 	public void activateSafetyApp() {
-		nm.notify(MainActivity.APP_NOTIFICATION_ID, defaultNotification());
-		this.activation = true;
-		toast("Safety app activated!", Toast.LENGTH_SHORT);
+		safetyApp = new SafetyApp(this);
+		safetyAppThread = new Thread(safetyApp);
+		safetyAppThread.start();
+
+		nm.notify(MainActivity.APP_NOTIFICATION_ID, safetyAppOnNotification());
+		Utils.toast(getApplicationContext(), "Safety app activated!", Toast.LENGTH_SHORT);
 	}
 
 	public void deactivateSafetyApp() {
 		nm.cancel(MainActivity.APP_NOTIFICATION_ID);
-		this.activation = false;
-		toast("Safety app deactivated.", Toast.LENGTH_SHORT);
+		if (safetyAppThread != null) {
+			safetyApp.terminate();
+			try {
+				safetyAppThread.join();
+			} catch (InterruptedException e) {
+				SafetyApp.debug("Exception encountered trying to join safetyAppThread: " + e);
+			}
+		}
+		cleanup();
+		Utils.toast(getApplicationContext(), "Safety app deactivated.", Toast.LENGTH_SHORT);
 	}
 
-	public Notification defaultNotification() {
+	private void cleanup() {
+		// TODO Write method to terminate all running threads
+		
+	}
+
+	public Notification safetyAppOnNotification() {
 		NotificationCompat.Builder ncb = new NotificationCompat.Builder(this)
 				.setSmallIcon(R.drawable.ic_launcher)
 				.setContentTitle("Safety Alert is ON.")
@@ -119,36 +93,4 @@ public class MainActivity extends Activity {
 		return notification;
 	}
 
-	public void guardianModeOn(int minutes) {
-		if (this.activation && !this.guardianMode) {
-			// User goes back to the screen when they click the notification
-			Intent toMainActivity = new Intent(this, MainActivity.class);
-			PendingIntent p = PendingIntent.getActivity(this, 0,
-					toMainActivity, 0);
-
-			// TODO Get a different icon for guardian mode
-			NotificationCompat.Builder ncb = new NotificationCompat.Builder(
-					this).setSmallIcon(R.drawable.ic_launcher)
-					.setContentTitle("Guardian Mode")
-					.setContentText("Your friend might send you an alert!")
-					.setContentIntent(p);
-
-			UpdateNotificationRunnable r = new UpdateNotificationRunnable(this,
-					ncb, nm, minutes);
-			toast("Guardian Mode is ON. For the next " + minutes
-					+ " minutes, your friend might send you distress signals!",
-					Toast.LENGTH_LONG);
-			this.guardianMode = true;
-			new Thread(r).start();
-		}
-	}
-
-	public void guardianModeOff() {
-		if (this.activation) {
-			nm.notify(MainActivity.APP_NOTIFICATION_ID, defaultNotification());
-			toast("Guardian Mode OFF. Thanks for helping out your friend!",
-					Toast.LENGTH_SHORT);
-			this.guardianMode = false;
-		}
-	}
 }
