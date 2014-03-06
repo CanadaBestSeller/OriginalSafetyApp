@@ -1,0 +1,5 @@
+TODO:
+
+Progress notification does not reset when guardian mode expires.
+Guardian mode needs to be prompted and accepted in ANOTHER thread, agnostic of current UI.
+Trigger needs to be prompted and accepted in ANOTHER thread, agnostic of current UI.
