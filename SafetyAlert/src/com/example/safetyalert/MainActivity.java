@@ -24,6 +24,7 @@ public class MainActivity extends Activity {
 
 		ToggleButton t = (ToggleButton) findViewById(R.id.activation_toggle);
 		// Need to change both the visual as well as the actual value
+		// This doesn't work the right way. When notification spawns an activity, uncheck still does nothing.
 		t.setChecked(safetyAppIsRunning());
 		t.setSelected(safetyAppIsRunning());
 	}
@@ -62,7 +63,7 @@ public class MainActivity extends Activity {
 	// }
 
 	public void activationClicked(View view) {
-		// TODO This is not working properly, when the button is uncheced, nothing happens.
+		// TODO This is not working properly, when the button is unchecked, nothing happens.
 		if (((ToggleButton) view).isChecked()) {
 			activateSafetyApp();
 		} else {
@@ -80,10 +81,8 @@ public class MainActivity extends Activity {
 
 	private boolean safetyAppIsRunning() {
 		ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-		for (RunningServiceInfo service : manager
-				.getRunningServices(Integer.MAX_VALUE)) {
-			if (SafetyAppService.class.getName().equals(
-					service.service.getClassName())) {
+		for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+			if (SafetyAppService.class.getName().equals(service.service.getClassName())) {
 				return true;
 			}
 		}

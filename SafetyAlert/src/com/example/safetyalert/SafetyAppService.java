@@ -23,14 +23,14 @@ public class SafetyAppService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int starttId) {
 		showNotification();
-		Toast.makeText(this, "My Service Started", Toast.LENGTH_LONG).show();
+		toast(R.string.alert_off, Toast.LENGTH_SHORT);
 		return START_REDELIVER_INTENT;
 	}
 	
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		Toast.makeText(this, "My Service Destroyed", Toast.LENGTH_LONG).show();
+		toast(R.string.alert_off, Toast.LENGTH_SHORT);
 		nm.cancel(SAFETY_APP_SERVICE_ID);
 	}
 
@@ -44,5 +44,9 @@ public class SafetyAppService extends Service {
 		// Service has not been initialized yet, can't pass this into safetyAppOnNotification
 		Notification safetyAppOnNotification = NotificationFactory.safetyAppOnNotification(this);
 		nm.notify(SAFETY_APP_SERVICE_ID, safetyAppOnNotification);
+	}
+	
+	private void toast(int id, int duration) {
+		Toast.makeText(this, this.getResources().getString(id), duration).show();
 	}
 }
