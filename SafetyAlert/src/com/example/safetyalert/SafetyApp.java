@@ -3,7 +3,6 @@ package com.example.safetyalert;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.webkit.WebView.FindListener;
 import android.widget.Toast;
 
 public class SafetyApp implements Runnable {

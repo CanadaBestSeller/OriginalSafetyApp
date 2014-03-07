@@ -15,11 +15,10 @@
         android:theme="@style/AppTheme" >
 
         <service
-            android:name="SafetyAppService"
+            android:enabled="true"
+            android:name="com.example.safetyalert.SafetyAppService"
             android:icon="@drawable/ic_launcher"
-            android:label="@string/safety_app_service_name" >
-
-        </service>
+            android:label="@string/safety_app_service_name" />
 
         <activity
             android:name="com.example.safetyalert.MainActivity"
