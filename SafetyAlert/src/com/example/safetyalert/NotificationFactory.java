@@ -18,6 +18,7 @@ public class NotificationFactory {
 		Intent toMainActivity = new Intent(context, MainActivity.class);
 		toMainActivity.setClass(context, MainActivity.class);
 		toMainActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
 		PendingIntent p = PendingIntent.getActivity(context, 0, toMainActivity, 0);
 		ncb.setContentIntent(p);
 

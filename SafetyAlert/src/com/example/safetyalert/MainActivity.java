@@ -23,6 +23,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		ToggleButton t = (ToggleButton) findViewById(R.id.activation_toggle);
+
 		// Need to change both the visual as well as the actual value
 		// This doesn't work the right way. When notification spawns an activity, uncheck still does nothing.
 		t.setChecked(safetyAppIsRunning());
@@ -41,34 +42,10 @@ public class MainActivity extends Activity {
 		super.onDestroy();
 	}
 
-	// ORIGINAL METHODS
-	// public void activationClicked(View view) {
-	// boolean on = ((ToggleButton) view).isChecked();
-	// if (on) { activateSafetyApp(); }
-	// else { deactivateSafetyApp(); }
-	// }
-	//
-	// public void activateSafetyApp() {
-	// safetyApp = new SafetyApp(this);
-	// safetyAppThread = new Thread(safetyApp);
-	// safetyAppThread.start();
-	// }
-	//
-	// public void deactivateSafetyApp() {
-	// if (safetyAppThread != null) {
-	// safetyApp.terminate();
-	// safetyAppThread.interrupt();
-	// }
-	// cleanup();
-	// }
-
 	public void activationClicked(View view) {
 		// TODO This is not working properly, when the button is unchecked, nothing happens.
-		if (((ToggleButton) view).isChecked()) {
-			activateSafetyApp();
-		} else {
-			deactivateSafetyApp();
-		}
+		if (((ToggleButton) view).isChecked()) activateSafetyApp();
+		else deactivateSafetyApp();
 	}
 
 	private void activateSafetyApp() {

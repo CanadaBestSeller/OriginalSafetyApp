@@ -1,10 +1,13 @@
 package com.example.safetyalert;
 
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.Service;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.IBinder;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 public class SafetyAppService extends Service {
@@ -17,13 +20,11 @@ public class SafetyAppService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		this.nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		Toast.makeText(this, "My Service Created", Toast.LENGTH_LONG).show();
 	}
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int starttId) {
-		showNotification();
-		toast(R.string.alert_off, Toast.LENGTH_SHORT);
+		startSafetyApp();
 		return START_REDELIVER_INTENT;
 	}
 	
@@ -36,17 +37,29 @@ public class SafetyAppService extends Service {
 
 	@Override
 	public IBinder onBind(Intent arg0) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
-	private void showNotification() {
-		// Service has not been initialized yet, can't pass this into safetyAppOnNotification
-		Notification safetyAppOnNotification = NotificationFactory.safetyAppOnNotification(this);
-		nm.notify(SAFETY_APP_SERVICE_ID, safetyAppOnNotification);
+	private void toast(String message) {
+		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 	}
 	
 	private void toast(int id, int duration) {
 		Toast.makeText(this, this.getResources().getString(id), duration).show();
+	}
+
+	private void startSafetyApp() {
+		Notification safetyAppOnNotification = NotificationFactory.safetyAppOnNotification(this);
+		nm.notify(SAFETY_APP_SERVICE_ID, safetyAppOnNotification);
+
+		toast(R.string.alert_off, Toast.LENGTH_SHORT);
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		DialogManager dm = new DialogManager(this);
+		dm.spawnRequest();
 	}
 }
