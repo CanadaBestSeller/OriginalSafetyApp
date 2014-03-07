@@ -13,5 +13,8 @@
     <string name="cancel">Cancel</string>
     <string name="trigger_title">Level 1 DANGER</string>
     <string name="respond">Respond</string>
+    <string name="safety_app_on">Safety App activated!</string>
+    <string name="safety_app_off">Safe App OFF. Make sure you turn it back on!</string>
+    <string name="safety_app_service_name">SafetyApp Service</string>
 
 </resources>

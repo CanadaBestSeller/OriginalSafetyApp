@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.safetyalert"
     android:versionCode="1"
@@ -8,23 +7,30 @@
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="19" />
-    
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
 
+        <service
+            android:name="SafetyAppService"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/safety_app_service_name" >
+
+        </service>
+
         <activity
             android:name="com.example.safetyalert.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.example.safetyalert.DisplayTriggerDetailsActivity"
             android:label="@string/trigger_title"
@@ -33,7 +39,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.safetyalert.MainActivity" />
         </activity>
-
     </application>
 
 </manifest>

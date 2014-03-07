@@ -46,6 +46,9 @@ public final class R {
         public static final int cancel=0x7f050008;
         public static final int confirm=0x7f050007;
         public static final int respond=0x7f05000a;
+        public static final int safety_app_off=0x7f05000c;
+        public static final int safety_app_on=0x7f05000b;
+        public static final int safety_app_service_name=0x7f05000d;
         public static final int start_guardian=0x7f050005;
         public static final int trigger=0x7f050006;
         public static final int trigger_title=0x7f050009;

@@ -24,5 +24,4 @@ public class NotificationFactory {
 
 		return notification;
 	}
-
 }

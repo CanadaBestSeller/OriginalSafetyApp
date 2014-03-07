@@ -4,13 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class MainActivity extends Activity {
-
-	public static final String EXTRA_MESSAGE = "com.example.safetyalert.MESSAGE";
-	public static final int APP_NOTIFICATION_ID = 1;
 
 	public SafetyApp safetyApp = null;
 	public Thread safetyAppThread = null;
@@ -18,6 +14,12 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+//		if (safetyApp != null) {
+//			ToggleButton t = (ToggleButton) findViewById(R.id.activation_toggle);
+//			t.setChecked(safetyApp.isOn);
+//		}
+
 		setContentView(R.layout.activity_main);
 	}
 
@@ -26,6 +28,12 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		deactivateSafetyApp();
 	}
 
 	public void activationClicked(View view) {
@@ -43,18 +51,13 @@ public class MainActivity extends Activity {
 	public void deactivateSafetyApp() {
 		if (safetyAppThread != null) {
 			safetyApp.terminate();
-			try {
-				safetyAppThread.join();
-			} catch (InterruptedException e) {
-				SafetyApp.debug("Exception encountered trying to join safetyAppThread: " + e);
-			}
+			safetyAppThread.interrupt();
 		}
 		cleanup();
-		Utils.toast(this, "Safety app deactivated.", Toast.LENGTH_SHORT);
 	}
 
 	private void cleanup() {
-		// TODO Write method to terminate all running threads
-		
+		safetyApp = null;
+		safetyAppThread = null;
 	}
 }
