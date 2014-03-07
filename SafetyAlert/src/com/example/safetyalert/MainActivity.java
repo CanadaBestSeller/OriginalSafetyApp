@@ -1,15 +1,7 @@
 package com.example.safetyalert;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
@@ -42,8 +34,6 @@ public class MainActivity extends Activity {
 		else { deactivateSafetyApp(); }
 	}
 
-	// TODO Link safety thread w/ notification so if one dies, so does the other
-	// This will make it much easier to debug
 	public void activateSafetyApp() {
 		safetyApp = new SafetyApp(this);
 		safetyAppThread = new Thread(safetyApp);
@@ -60,7 +50,7 @@ public class MainActivity extends Activity {
 			}
 		}
 		cleanup();
-		Utils.toast(getApplicationContext(), "Safety app deactivated.", Toast.LENGTH_SHORT);
+		Utils.toast(this, "Safety app deactivated.", Toast.LENGTH_SHORT);
 	}
 
 	private void cleanup() {

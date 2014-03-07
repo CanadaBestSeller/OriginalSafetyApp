@@ -28,24 +28,20 @@ public class SafetyApp implements Runnable {
 				NotificationFactory.safetyAppOnNotification(mainActivity));
 //		Utils.toast(mainActivity.getApplicationContext(),
 //				"Safety app activated!", Toast.LENGTH_SHORT);
+		Utils.toast(mainActivity, "Safety App activated!", Toast.LENGTH_SHORT);
 
-				mainActivity.runOnUiThread(new Runnable() {
-					public void run() {
-						Utils.toast(mainActivity.getApplicationContext(),
-								"Safety app activated!", Toast.LENGTH_SHORT);
-					}
-				});
+//				mainActivity.runOnUiThread(new Runnable() {
+//					public void run() {
+//						Utils.toast(mainActivity.getApplicationContext(),
+//								"Safety app activated!", Toast.LENGTH_SHORT);
+//					}
+//				});
 		while (isOn) {
 			try {
 				Thread.sleep(5000);
 
 				// GuardianMode
-				mainActivity.runOnUiThread(new Runnable() {
-					public void run() {
-						Utils.toast(mainActivity.getApplicationContext(),
-								"Sent guardian request!", Toast.LENGTH_SHORT);
-					}
-				});
+                Utils.toast(mainActivity, "Sent guardian request!", Toast.LENGTH_SHORT);
 
 			} catch (InterruptedException e) {
 				SafetyApp.debug("Exception in SafetyApp thread: " + e);

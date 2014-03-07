@@ -1,7 +1,5 @@
 TODO:
 
-Merge notification with safetyApp runnable.
-
 Progress notification does not reset when guardian mode expires.
 BECAUSE onClick notification intent is creating another instance every time
 
