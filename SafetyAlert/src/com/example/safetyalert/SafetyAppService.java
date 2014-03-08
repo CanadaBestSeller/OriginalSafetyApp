@@ -39,9 +39,9 @@ public class SafetyAppService extends Service {
 		return null;
 	}
 	
-//	private void toast(String message) {
-//		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-//	}
+	private void toast(String message) {
+		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+	}
 	
 	private void toast(int id, int duration) {
 		Toast.makeText(this, this.getResources().getString(id), duration).show();
@@ -51,14 +51,17 @@ public class SafetyAppService extends Service {
 		Notification safetyAppOnNotification = NotificationFactory.safetyAppOnNotification(this);
 		nm.notify(SAFETY_APP_SERVICE_ID, safetyAppOnNotification);
 
-		toast(R.string.alert_off, Toast.LENGTH_SHORT);
+		toast(R.string.alert_on, Toast.LENGTH_SHORT);
+
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
+		//this.stopSelf();
 
-		DialogManager dm = new DialogManager(this);
-		dm.spawnRequest(guardianshipSessionIntent);
+//		DialogManager dm = new DialogManager(this);
+//		dm.spawnRequest(guardianshipSessionIntent);
 	}
 }

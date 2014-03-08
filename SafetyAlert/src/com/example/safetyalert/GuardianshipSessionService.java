@@ -19,16 +19,16 @@ public class GuardianshipSessionService extends Service {
 	}
 
 	@Override
+	public void onDestroy() {
+		super.onDestroy();
+	}
+
+	@Override
 	public IBinder onBind(Intent arg0) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	@Override
-	public void onDestroy() {
-		super.onDestroy();
-	}
-	
+		
 	private void toast(String message) {
 		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 	}

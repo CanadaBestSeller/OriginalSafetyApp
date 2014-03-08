@@ -18,7 +18,8 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		safetyAppIntent = new Intent(this, GuardianshipSessionService.class);
+		safetyAppIntent = new Intent(this, SafetyAppService.class);
+//		safetyAppIntent = new Intent(this, GuardianshipSessionService.class);
 
 		setContentView(R.layout.activity_main);
 
@@ -60,6 +61,7 @@ public class MainActivity extends Activity {
 		ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
 		for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
 			if (SafetyAppService.class.getName().equals(service.service.getClassName())) {
+//			if (GuardianshipSessionService.class.getName().equals(service.service.getClassName())) {
 				return true;
 			}
 		}
