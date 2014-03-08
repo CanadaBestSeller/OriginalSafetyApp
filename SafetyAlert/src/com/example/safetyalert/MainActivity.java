@@ -26,7 +26,8 @@ public class MainActivity extends Activity {
 		ToggleButton t = (ToggleButton) findViewById(R.id.activation_toggle);
 
 		// Need to change both the visual as well as the actual value
-		// This doesn't work the right way. When notification spawns an activity, uncheck still does nothing.
+		// This doesn't work the right way. When notification spawns an activity
+		// uncheck still does nothing.
 		t.setChecked(safetyAppIsRunning());
 		t.setSelected(safetyAppIsRunning());
 	}

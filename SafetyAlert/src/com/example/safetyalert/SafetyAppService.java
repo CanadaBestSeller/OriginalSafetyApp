@@ -1,31 +1,50 @@
 package com.example.safetyalert;
 
+import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.Service;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
 import android.widget.Toast;
 
-public class SafetyAppService extends Service {
+public class SafetyAppService extends IntentService {
 
 	public static final int SAFETY_APP_SERVICE_ID = 1;
 
 	private NotificationManager nm;
 	private Intent guardianshipSessionIntent;
+	private Handler handler;
 
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		this.nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		guardianshipSessionIntent = new Intent(this, GuardianshipSessionService.class);
+	public SafetyAppService() {
+		super("SafetyApp Intent Service.");
+		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
-	public int onStartCommand(Intent intent, int flags, int starttId) {
+	protected void onHandleIntent(Intent intent) {
+		// TODO Auto-generated method stub
+		
+		this.nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		guardianshipSessionIntent = new Intent(this, GuardianshipSessionService.class);
+		
 		startSafetyApp();
-		return START_REDELIVER_INTENT;
 	}
+
+	// These Methods should not be overwritten, as they spawn a background worker thread!
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		handler = new Handler();
+//		this.nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//		guardianshipSessionIntent = new Intent(this, GuardianshipSessionService.class);
+	}
+//	
+//	@Override
+//	public int onStartCommand(Intent intent, int flags, int starttId) {
+//		startSafetyApp();
+//		return START_REDELIVER_INTENT;
+//	}
 	
 	@Override
 	public void onDestroy() {
@@ -51,7 +70,16 @@ public class SafetyAppService extends Service {
 		Notification safetyAppOnNotification = NotificationFactory.safetyAppOnNotification(this);
 		nm.notify(SAFETY_APP_SERVICE_ID, safetyAppOnNotification);
 
-		toast(R.string.alert_on, Toast.LENGTH_SHORT);
+		handler.post(new Runnable() { public void run() { toast("STARTED!"); } });
+
+		// This thread is causing the toast above to NOT EXECUTE
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		handler.post(new Runnable() { public void run() { toast("DURING!"); } });
 
 		try {
 			Thread.sleep(5000);
@@ -59,9 +87,12 @@ public class SafetyAppService extends Service {
 			e.printStackTrace();
 		}
 		
+		handler.post(new Runnable() { public void run() { toast("END!"); } });
+
 		//this.stopSelf();
 
 //		DialogManager dm = new DialogManager(this);
 //		dm.spawnRequest(guardianshipSessionIntent);
 	}
+
 }
