@@ -18,7 +18,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		safetyAppIntent = new Intent(this, SafetyAppService.class);
+		safetyAppIntent = new Intent(this, GuardianshipSessionService.class);
 
 		setContentView(R.layout.activity_main);
 

@@ -15,7 +15,7 @@ public class DisplayTriggerDetailsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		TextView textView = new TextView(this);
-		textView.setText(TriggerMessage.getDefaultMessage());
+		textView.setText(getResources().getString(R.string.activation));
 		
 		setContentView(textView);
 	}

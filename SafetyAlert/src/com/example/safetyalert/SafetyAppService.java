@@ -1,13 +1,10 @@
 package com.example.safetyalert;
 
-import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.Service;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.IBinder;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 public class SafetyAppService extends Service {
@@ -15,11 +12,13 @@ public class SafetyAppService extends Service {
 	public static final int SAFETY_APP_SERVICE_ID = 1;
 
 	private NotificationManager nm;
+	private Intent guardianshipSessionIntent;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		this.nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		guardianshipSessionIntent = new Intent(this, GuardianshipSessionService.class);
 	}
 	
 	@Override
@@ -40,9 +39,9 @@ public class SafetyAppService extends Service {
 		return null;
 	}
 	
-	private void toast(String message) {
-		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-	}
+//	private void toast(String message) {
+//		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+//	}
 	
 	private void toast(int id, int duration) {
 		Toast.makeText(this, this.getResources().getString(id), duration).show();
@@ -60,6 +59,6 @@ public class SafetyAppService extends Service {
 		}
 
 		DialogManager dm = new DialogManager(this);
-		dm.spawnRequest();
+		dm.spawnRequest(guardianshipSessionIntent);
 	}
 }
