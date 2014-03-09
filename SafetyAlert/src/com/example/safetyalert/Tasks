@@ -10,5 +10,7 @@ Can't use IntentServices because worker thread also dies when the activity is de
 (possibly use AsyncTask instead of threads)
 This doesn't work because AsyncTask DIES when the app quits.
 
+NEXT STEP: Find the commit where process is not affected by app quiting. It's okay if the UI thread locks.
+
 Guardian mode needs to be prompted and accepted in ANOTHER thread, agnostic of current UI.
 Trigger needs to be prompted and accepted in ANOTHER thread, agnostic of current UI.
