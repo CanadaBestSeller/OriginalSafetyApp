@@ -32,13 +32,13 @@ public class SafetyAppService extends IntentService {
 	}
 
 	// These Methods should not be overwritten, as they spawn a background worker thread!
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		handler = new Handler();
+//	@Override
+//	public void onCreate() {
+//		super.onCreate();
+//		handler = new Handler();
 //		this.nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 //		guardianshipSessionIntent = new Intent(this, GuardianshipSessionService.class);
-	}
+//	}
 //	
 //	@Override
 //	public int onStartCommand(Intent intent, int flags, int starttId) {
@@ -70,24 +70,24 @@ public class SafetyAppService extends IntentService {
 		Notification safetyAppOnNotification = NotificationFactory.safetyAppOnNotification(this);
 		nm.notify(SAFETY_APP_SERVICE_ID, safetyAppOnNotification);
 
-		handler.post(new Runnable() { public void run() { toast("STARTED!"); } });
-
-		// This thread is causing the toast above to NOT EXECUTE
+//		handler.post(new Runnable() { public void run() { toast("STARTED!"); } });
+//
+//		// This thread is causing the toast above to NOT EXECUTE
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
-		handler.post(new Runnable() { public void run() { toast("DURING!"); } });
-
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		handler.post(new Runnable() { public void run() { toast("END!"); } });
+//		
+//		handler.post(new Runnable() { public void run() { toast("DURING!"); } });
+//
+//		try {
+//			Thread.sleep(5000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		handler.post(new Runnable() { public void run() { toast("END!"); } });
 
 		//this.stopSelf();
 

@@ -1,7 +1,11 @@
 TODO:
 
-Progress notification does not reset when guardian mode expires.
-BECAUSE onClick notification intent is creating another instance every time
+Can't use just threads because they die when the activity is destroyed.
+Can't use Services because they block the UI thread.
+Can't use IntentServices because they also die when the activity is destroyed.
+
+*** I have to use Services WITH threads because the services will be alive without blocking the UI thread.
+(possibly use AsyncTask instead of threads)
 
 Guardian mode needs to be prompted and accepted in ANOTHER thread, agnostic of current UI.
 Trigger needs to be prompted and accepted in ANOTHER thread, agnostic of current UI.
