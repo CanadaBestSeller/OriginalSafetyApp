@@ -2,10 +2,13 @@ TODO:
 
 Can't use just threads because they die when the activity is destroyed.
 Can't use Services because they block the UI thread.
-Can't use IntentServices because they also die when the activity is destroyed.
+Can't use IntentServices because worker thread also dies when the activity is destroyed.
+(Maybe NOT! Maybe only the handler dies and toasts return null)
+
 
 *** I have to use Services WITH threads because the services will be alive without blocking the UI thread.
 (possibly use AsyncTask instead of threads)
+This doesn't work because AsyncTask DIES when the app quits.
 
 Guardian mode needs to be prompted and accepted in ANOTHER thread, agnostic of current UI.
 Trigger needs to be prompted and accepted in ANOTHER thread, agnostic of current UI.
