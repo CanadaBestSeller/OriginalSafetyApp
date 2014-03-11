@@ -52,14 +52,15 @@ public class SafetyAppService extends Service {
 		Notification safetyAppOnNotification = NotificationFactory.safetyAppOnNotification(this);
 		nm.notify(SAFETY_APP_SERVICE_ID, safetyAppOnNotification);
 
-		toast(R.string.alert_off, Toast.LENGTH_SHORT);
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			Thread.sleep(5000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 
-		DialogManager dm = new DialogManager(this);
-		dm.spawnRequest();
+		//Toast.makeText(this, "Guardian session finished! Thanks for helping out your friend. :)", Toast.LENGTH_SHORT).show();
+
+//		DialogManager dm = new DialogManager(this)
+//		dm.spawnRequest();
 	}
 }

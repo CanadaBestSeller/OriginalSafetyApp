@@ -17,17 +17,17 @@ public class DialogManager {
 	public void spawnRequest() {
 
 		builder = new AlertDialog.Builder(context);
-		builder.setTitle("Test dialog");
+		builder.setTitle("Level 2 DANGER!");
 		builder.setIcon(R.drawable.ic_launcher);
-		builder.setMessage("Content");
+		builder.setMessage("Your friend is in level 2 danger!");
 
-		builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+		builder.setPositiveButton("Respond", new DialogInterface.OnClickListener() {
 		    public void onClick(DialogInterface dialog, int whichButton) {
 		        //Do something
 		        dialog.dismiss();
 		    }
 		});
-		builder.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+		builder.setNegativeButton("Later", new DialogInterface.OnClickListener() {
 		    public void onClick(DialogInterface dialog, int whichButton) {
 		        dialog.dismiss();
 		    }

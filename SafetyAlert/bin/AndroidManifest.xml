@@ -35,7 +35,15 @@
         </activity>
         <activity
             android:name="com.example.safetyalert.DisplayTriggerDetailsActivity"
-            android:label="@string/trigger_title"
+            android:label="Level 2 Danger"
+            android:parentActivityName="com.example.safetyalert.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.safetyalert.MainActivity" />
+        </activity>
+        <activity
+            android:name="com.example.safetyalert.Questionnaire"
+            android:label="Response Questionnaire"
             android:parentActivityName="com.example.safetyalert.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

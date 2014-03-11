@@ -48,6 +48,15 @@ public class MainActivity extends Activity {
 		else deactivateSafetyApp();
 	}
 
+	public void questionnaire(View view) {
+		Intent toQuestionnaire = new Intent(this, Questionnaire.class);
+		startActivity(toQuestionnaire);
+	}
+
+	public void trigger(View view) {
+		Intent toSecondary = new Intent(this, DisplayTriggerDetailsActivity.class);
+		startActivity(toSecondary);
+	}
 	private void activateSafetyApp() {
 		startService(safetyAppIntent);
 	}
